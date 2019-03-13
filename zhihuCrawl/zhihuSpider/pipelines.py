@@ -40,6 +40,7 @@ class ZhihucrawlPipeline:
         res = self.curr.fetchall()
         for line in res:
             print(line)
+            print()
 
 
     def close_spider(self, spider):
