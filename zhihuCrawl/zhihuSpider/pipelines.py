@@ -4,7 +4,6 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-import pymongo
 import pymysql
 import scrapy
 from scrapy.exceptions import DropItem
@@ -40,6 +39,14 @@ class ZhihucrawlPipeline:
         res = self.curr.fetchall()
         for line in res:
             print(line)
+        sql = "insert into py_table value(null, %s, %s)"
+        data = ('名字1', 20)
+        self.curr.execute(sql, data)
+        print(self.curr.lastrowid)
+        print(self.conn.insert_id())
+        self.conn.commit()
+        print(self.curr.lastrowid)
+        print(self.conn.insert_id())
 
     def close_spider(self, spider):
         print('调用close_spider')
@@ -61,6 +68,17 @@ class ZhihucrawlPipeline:
 
 
 class ZhihuImagePipeline(ImagesPipeline):
+
+    # def __init__(self):
+    #     print("创建实例")
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        pass
+
+    def process_item(self, item, spider):
+        print("我是ZhihuImagePipeline")
+
     # 重写ImagesPipeline   get_media_requests方法
     def get_media_requests(self, item, info):
         '''

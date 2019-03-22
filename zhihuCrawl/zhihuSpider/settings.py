@@ -73,10 +73,13 @@ DEFAULT_REQUEST_HEADERS = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'zhihuSpider.pipelines.ZhihucrawlPipeline': 300,
-   'zhihuSpider.pipelines.ZhihuImagePipeline': 800,
+   'zhihuSpider.58ershoufangPipeline.Ly58ershoufangPipeline': 300,
+   'zhihuSpider.58ershoufangPipeline.HouseImagesPipeline': 800,
 }
-
+# 图片存储路径（绝对路径or相对路径）
+import os
+PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
+IMAGES_STORE = os.path.join(PROJECT_DIR, 'houseImages/')
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
 AUTOTHROTTLE_ENABLED = True

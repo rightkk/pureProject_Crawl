@@ -41,3 +41,32 @@ class RelationItem(scrapy.Item):
     relation_type = scrapy.Field()
     # 和我有关系人的id列表
     relations_id = scrapy.Field()
+
+
+class HouseInfoItem(scrapy.Item):
+    # 总价
+    title = scrapy.Field()
+    community_name = scrapy.Field()
+    total_price = scrapy.Field()
+    unit_price = scrapy.Field()
+    house_type = scrapy.Field()
+    decorate = scrapy.Field()
+    legal_area = scrapy.Field()
+    use_area = scrapy.Field()
+    # cx = scrapy.Field()
+    floor = scrapy.Field()
+    right_limit = scrapy.Field()
+    built_age = scrapy.Field()
+    pic_urls = scrapy.Field()
+    publish_date = scrapy.Field()
+
+
+class CommunityInfoItem(scrapy.Item):
+    community_name = scrapy.Field()
+    street_block = scrapy.Field()
+    average_price = scrapy.Field()
+    property_fee = scrapy.Field()
+    plot_rate = scrapy.Field()
+    greening_rate = scrapy.Field()
+    city = scrapy.Field()
+    district = scrapy.Field()
