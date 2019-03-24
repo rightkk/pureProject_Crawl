@@ -26,17 +26,18 @@ class Ly58ComSpider(CrawlSpider):
         # 抽取总价、单价、详情url列表、下一页url
         totalPrice_list = response.xpath("//ul[@class='house-list-wrap']/li/descendant::p[@class='sum']/b/text()").extract()
         unitPrice_list = response.xpath("//ul[@class='house-list-wrap']/li/descendant::p[@class='unit']/text()").extract()
-        next_page = response.xpath("//div[@class='pager']/descendant::a[1]/@href").extract_first()
+        next_page = response.xpath("//div[@class='pager']/descendant::a[@class='next']/@href").extract_first()
         next_url = ''.join([Ly58ComSpider.start_urls[0], next_page])
         houseinfo_urls = response.xpath("//ul[@class='house-list-wrap']/li/div[@class='list-info']/h2[@class='title']/a/@href").extract()
         limit_number = 0
         # 获取下一页的页码
         _start = next_url.find("pn")
         next_page_no = next_url[_start+2:_start+3]
+        print("当前页码：%d" % (int(next_page_no)-1))
         for url, totalPrice, unitPrice in zip(houseinfo_urls, totalPrice_list, unitPrice_list):
             # 每页抽取20条
             if limit_number == 20:
-                print("第一页封装20条连接请求完成")
+                print("封装20条连接请求完成")
                 break
             limit_number += 1
             # //short.58.com/zd_p/7c6fef24-2447-4a09-b88b-f67c305edc58/?target=na-16-xgk_psfegvimob_80588994492248q-feykn&end=end
@@ -47,6 +48,7 @@ class Ly58ComSpider(CrawlSpider):
                           errback=self.parse_err)
         if next_page_no == 6:
             print("前5页数据爬取完毕")
+            # self.close(self, "已抽取前5页数据")
         yield Request(url=next_url, callback=self.parse_summary_page, errback=self.parse_err)
 
     def parse_detail_page(self, response):

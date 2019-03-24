@@ -76,16 +76,15 @@ class Ly58ershoufangPipeline:
 
     def _process_house_info(self, item):
         sql = "insert into crawl_houseinfo value(null,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        find_sql = "select id from crawl_communityinfo where communityName='%s'" % item['community_name'].strip()
-        self.curr.execute(find_sql)
-        res = self.curr.fetchone()
-        if not res[0]:
-            raise RuntimeError("community_id 没有获取到")
-        else:
-            community_id = res[0]
+        community_id = 171
         if not item['community_name']:
-            print("item里的community_name字段为None")
-            item['community_name'] = ""
+            find_sql = "select id from crawl_communityinfo where communityName='%s'" % item['community_name'].strip()
+            self.curr.execute(find_sql)
+            res = self.curr.fetchone()
+            if not res[0]:
+                raise RuntimeError("community_id 没有获取到")
+            else:
+                community_id = res[0]
         unit_price = item['unit_price'].split('元')[0]
         legal_area = item['legal_area'].split('㎡')[0]
         use_area = item['use_area'].split("平")[0]
